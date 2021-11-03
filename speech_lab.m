@@ -23,6 +23,10 @@ x_AA = x(16750:18800);
 soundsc(x_SH);
 soundsc(x_AA);
 
+%Apply hamming windows
+x_SH = enframe(x_SH,hamming(320),160);
+x_AA = enframe(x_AA,hamming(320),160);
+
 %% the phoneme signal x_SH
 [A_SH, G_SH, r_SH, a_SH] = autolpc(x_SH, p);
 % est_SH = filter([0 - A_SH(2:end)],1,x_SH);
