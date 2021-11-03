@@ -29,8 +29,6 @@ x_AA = enframe(x_AA,hamming(320),160);
 
 %% the phoneme signal x_SH
 [A_SH, G_SH, r_SH, a_SH] = autolpc(x_SH, p);
-% est_SH = filter([0 - A_SH(2:end)],1,x_SH);
-% err_SH = x_SH - est_SH;
 
 %frequency response of 
 % vocal tract filter H(z)
@@ -49,6 +47,7 @@ hold
 plot(wp_SH/pi,20*log10(abs(hp_SH)));
 legend("vocal tract filter","prediction error filter")
 title("Frequency responses of the phoneme SH")
+
 %% the phoneme signal x_AA
 [A_AA, G_AA, r_AA, a_AA] = autolpc(x_AA, p);
 % est_SH = filter([0 - A_SH(2:end)],1,x_SH);
@@ -95,4 +94,27 @@ zplane(roots(b_AA),roots(a_AA))
 grid
 title("zeros and poles in vocal tract AA")
 
+%% question 3
+% x_SH_p = filter([0 -(a_SH(2:end)).'],1, s5(15500:16750));
+% x_AA_p = filter([0 -(a_AA(2:end)).'],1, s5(16750:18800));
+fs = 8000; %Sample frequency
+N = 512; %fft points
+n=0:N-1;
+f=n*fs/N; % Frequency sequence.20*log10(f_SH))
+f_SH = abs(fft(x_SH.',N));
+f_AA = abs(fft(x_AA.',N));
+figure(3)
+plot(wv_SH/pi,20*log10(abs(hv_SH)));
+hold on
+plot(wv_SH/pi,20*log10(f_SH));
+ax = gca;
+xlabel('Normalized Frequency (\times\pi rad/sample)')
+ylabel('Magnitude (dB)')
+figure(4)
+plot(wv_AA/pi,20*log10(abs(hv_AA)));
+hold on 
+plot(wv_AA/pi,20*log10(f_AA));
+ax = gca;
+xlabel('Normalized Frequency (\times\pi rad/sample)')
+ylabel('Magnitude (dB)')
 
