@@ -1,2 +1,2 @@
 # imperial_labs
-labs
+speech labs
